@@ -8,13 +8,18 @@ public class SudokuBoard {
     SudokuBoard(SudokuSquareLinkedList aList) {
         boardSize = 4;
         myBoard = new SudokuSquare[boardSize][boardSize];
+        for(int r = 0; r < boardSize; ++r) {
+            for(int c = 0; c < boardSize; ++c) {
+                myBoard[r][c] = new SudokuSquare(r, c, 0, false);
+            }
+        }
         SudokuSquareNode aNode = aList.getNext();
         while(aNode != null) {
             SudokuSquare aSquare = aNode.getData();
-            int r, c;
+            int r, c, value;
             r = aSquare.getRow();
             c = aSquare.getColumn();
-            int value = aSquare.getValue();
+            value = aSquare.getValue();
             myBoard[r][c] = new SudokuSquare(r, c, value, true);
             aNode = aList.getNext();
         }
