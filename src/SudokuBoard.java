@@ -54,14 +54,53 @@ public class SudokuBoard {
     }
 
     private boolean valueInQuadrant(int row, int col, int value) {
-        /*Intentionally left empty*/
+        if(row < 2) {
+            if(col < 2) {
+                for(int i = 0; i < 2; ++i) {
+                    for(int j = 0; j < 2; ++j) {
+                        if(myBoard[i][j].getValue() == value){ return true; }
+                    }
+                }
+            } else {
+                for (int i = 0; i < 2; ++i) {
+                    for (int j = 2; j < boardSize; ++j) {
+                        if (myBoard[i][j].getValue() == value) { return true; }
+                    }
+                }
+            }
+        } else {
+            if (col < 2) {
+                for (int i = 2; i < boardSize; ++i) {
+                    for (int j = 0; j < 2; ++j) {
+                        if (myBoard[i][j].getValue() == value) { return true; }
+                    }
+                }
+            } else {
+                for (int i = 2; i < boardSize; ++i) {
+                    for (int j = 2; j < boardSize; ++j) {
+                        if (myBoard[i][j].getValue() == value) { return true; }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private boolean valueInRow(int row, int value) {
-        /*Intentionally left empty*/
+        for(int c = 0; c < boardSize; ++c) {
+            if(myBoard[row][c].getValue() == value) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean valueInColumn(int col, int value) {
-        /*Intentionally left empty*/
+        for(int r = 0; r < boardSize; ++r) {
+            if(myBoard[r][col].getValue() == value) {
+                return true;
+            }
+        }
+        return false;
     }
 }
