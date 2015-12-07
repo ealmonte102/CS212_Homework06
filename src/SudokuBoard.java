@@ -3,7 +3,7 @@
  */
 public class SudokuBoard {
     private SudokuSquare myBoard[][];
-    final int boardSize;
+    private final int boardSize;
 
     SudokuBoard(SudokuSquareLinkedList aList) {
         boardSize = 4;
