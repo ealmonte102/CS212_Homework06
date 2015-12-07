@@ -20,7 +20,9 @@ public class SudokuSquareLinkedList {
 
     public SudokuSquareNode getNext() {
         SudokuSquareNode aSudokuNode = squareToReturn;
-        squareToReturn = squareToReturn.getNext();
+        if(squareToReturn != null) {
+            squareToReturn = squareToReturn.getNext();
+        }
         return aSudokuNode;
     }
 }
