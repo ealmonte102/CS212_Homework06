@@ -40,4 +40,8 @@ public class SudokuBoard {
         }
         return true;
     }
+
+    public SudokuSquare getSquare(int row, int column) {
+        return myBoard[row][column];
+    }
 }
