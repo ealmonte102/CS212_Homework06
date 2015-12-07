@@ -45,6 +45,11 @@ public class SudokuBoard {
         return myBoard[row][column];
     }
 
+    public void enterMove(int row, int col, int value) throws SudokuException {
+        if(! isValid(row, col, value)) { throw new SudokuException("Invalid Move"); }
+        myBoard[row][col] = new SudokuSquare(row, col, value, false);
+    }
+
     private boolean isValid(int row, int column, int value) {
         if(value < 0 || value > 4) { return false; }
         if(row < 0 || row > boardSize) { return false; }
