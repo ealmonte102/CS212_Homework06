@@ -44,4 +44,24 @@ public class SudokuBoard {
     public SudokuSquare getSquare(int row, int column) {
         return myBoard[row][column];
     }
+
+    private boolean isValid(int row, int column, int value) {
+        if(value < 0 || value > 4) { return false; }
+        if(row < 0 || row > boardSize) { return false; }
+        if(column < 0 || column > boardSize) { return false; }
+        if(myBoard[row][column].isLocked()) { return false; }
+        return !(valueInQuadrant(row, column, value) || valueInRow(row, value) || valueInColumn(column, value));
+    }
+
+    private boolean valueInQuadrant(int row, int col, int value) {
+        /*Intentionally left empty*/
+    }
+
+    private boolean valueInRow(int row, int value) {
+        /*Intentionally left empty*/
+    }
+
+    private boolean valueInColumn(int col, int value) {
+        /*Intentionally left empty*/
+    }
 }
