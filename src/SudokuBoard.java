@@ -3,11 +3,11 @@
  */
 public class SudokuBoard {
     private SudokuSquare myBoard[][];
-    final int sizeOfBoard;
+    final int boardSize;
 
     SudokuBoard(SudokuSquareLinkedList aList) {
-        sizeOfBoard = 4;
-        myBoard = new SudokuSquare[sizeOfBoard][sizeOfBoard];
+        boardSize = 4;
+        myBoard = new SudokuSquare[boardSize][boardSize];
         SudokuSquareNode aNode = aList.getNext();
         while(aNode != null) {
             SudokuSquare aSquare = aNode.getData();
@@ -21,12 +21,23 @@ public class SudokuBoard {
     }
 
     public void reset() {
-        for(int i = 0; i < sizeOfBoard; ++i) {
-            for(int j = 0; j < sizeOfBoard; ++j) {
+        for(int i = 0; i < boardSize; ++i) {
+            for(int j = 0; j < boardSize; ++j) {
                 if(! myBoard[i][j].isLocked()) {
                     myBoard[i][j] = new SudokuSquare(i, j, 0, false);
                 }
             }
         }
+    }
+
+    public boolean isFull() {
+        for(int i = 0; i < boardSize; ++i) {
+            for(int j = 0; j < boardSize; ++j) {
+                if(myBoard[i][j].getValue() == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
