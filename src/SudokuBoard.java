@@ -5,7 +5,7 @@ public class SudokuBoard {
     private SudokuSquare myBoard[][];
     private final int boardSize;
 
-    SudokuBoard(SudokuSquareLinkedList aList) {
+    public SudokuBoard(SudokuSquareLinkedList aList) {
         boardSize = 4;
         myBoard = new SudokuSquare[boardSize][boardSize];
         for(int r = 0; r < boardSize; ++r) {
