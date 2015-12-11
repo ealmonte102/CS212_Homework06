@@ -84,4 +84,16 @@ public class SudokuBoardView extends JFrame {
     public void addButtonListener(ActionListener bl, int row, int col) {
         sudokuButtons[row][col].addActionListener(bl);
     }
+
+    public void setButtonText(String text, int row, int col) {
+        sudokuButtons[row][col].setText(text);
+    }
+
+    public String getInputText() {
+        return inputField.getText();
+    }
+
+    public void setOutputText(String textOutput) {
+        outputField.setText(textOutput);
+    }
 }
