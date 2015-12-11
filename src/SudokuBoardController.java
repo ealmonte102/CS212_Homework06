@@ -32,13 +32,8 @@ public class SudokuBoardController {
                     "Please Choose An Option", JOptionPane.YES_NO_OPTION);
             if(userChoice == JOptionPane.YES_OPTION) {
                 boardModel.reset();
-                for(int i = 0; i < boardModel.boardSize; ++i) {
-                    for(int j = 0; j < boardModel.boardSize; ++j) {
-                        String boardValue = Integer.toString(boardModel.getSquare(i,j).getValue());
-                        if(boardValue == "0") { boardValue = ""; }
-                        boardView.setButtonText(boardValue, i, j);
-                    }
-                }
+                boardView.setModel(boardModel);
+                boardView.resetButtons();
             }
             boardView.resetRadioSelection();
         }
@@ -56,17 +51,30 @@ public class SudokuBoardController {
             String [] buttonLocation = e.getActionCommand().split(",");
             int row = Integer.parseInt(buttonLocation[0]);
             int column = Integer.parseInt(buttonLocation[1]);
+
             if(boardView.isCheckIfValidSelected()) {
                 if(boardModel.isValid(row, column, valueFromInput)) {
                     boardView.setOutputText("The move entered is VALID!");
                 } else {
-                    boardView.setOutputText("The move entered is NOT a valid move.");
+                    boardView.setOutputText("The move entered is NOT valid.");
                 }
                 return;
             }
             try {
                 boardModel.enterMove(row, column, valueFromInput);
                 boardView.setButtonText(Integer.toString(valueFromInput), row, column);
+                if(boardModel.isFull()) {
+                    int userChoice = JOptionPane.showConfirmDialog(null,"Would you like to start over?",
+                            "Please select a choice", JOptionPane.YES_NO_OPTION);
+                    switch (userChoice) {
+                        case JOptionPane.YES_OPTION:
+                            boardModel.reset();
+                            boardView.setModel(boardModel);
+                            boardView.resetButtons();
+                            break;
+                        default:
+                    }
+                }
             } catch(SudokuException se) {
                 boardView.setOutputText("Cannot place a " + valueFromInput + " in that location.");
             }
