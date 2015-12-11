@@ -5,8 +5,9 @@ public class SudokuBoard {
     private SudokuSquare myBoard[][];
     public final int boardSize;
 
-    public SudokuBoard(SudokuSquareLinkedList aList) {
-        boardSize = 4;
+    public SudokuBoard(SudokuSquareLinkedList aList, int boardSize) {
+        if(boardSize != 4 && boardSize != 5 && boardSize != 9) { boardSize = 4; }
+        this.boardSize = boardSize;
         myBoard = new SudokuSquare[boardSize][boardSize];
         for(int r = 0; r < boardSize; ++r) {
             for(int c = 0; c < boardSize; ++c) {
@@ -56,7 +57,7 @@ public class SudokuBoard {
     }
 
     public boolean isValid(int row, int column, int value) {
-        if(value < 0 || value > 4) { return false; }
+        if(value < 1 || value > boardSize) { return false; }
         if(row < 0 || row > boardSize) { return false; }
         if(column < 0 || column > boardSize) { return false; }
         if(myBoard[row][column].isLocked()) { return false; }
@@ -64,30 +65,31 @@ public class SudokuBoard {
     }
 
     private boolean valueInQuadrant(int row, int col, int value) {
-        if(row < 2) {
-            if(col < 2) {
-                for(int i = 0; i < 2; ++i) {
-                    for(int j = 0; j < 2; ++j) {
+        int numQuadrantGroups = (int)Math.sqrt(boardSize);
+        if(row < numQuadrantGroups) {
+            if(col < numQuadrantGroups) {
+                for(int i = 0; i < numQuadrantGroups; ++i) {
+                    for(int j = 0; j < numQuadrantGroups; ++j) {
                         if(myBoard[i][j].getValue() == value){ return true; }
                     }
                 }
             } else {
-                for (int i = 0; i < 2; ++i) {
-                    for (int j = 2; j < boardSize; ++j) {
+                for (int i = 0; i < numQuadrantGroups; ++i) {
+                    for (int j = numQuadrantGroups; j < boardSize; ++j) {
                         if (myBoard[i][j].getValue() == value) { return true; }
                     }
                 }
             }
         } else {
-            if (col < 2) {
-                for (int i = 2; i < boardSize; ++i) {
-                    for (int j = 0; j < 2; ++j) {
+            if (col < numQuadrantGroups) {
+                for (int i = numQuadrantGroups; i < boardSize; ++i) {
+                    for (int j = 0; j < numQuadrantGroups; ++j) {
                         if (myBoard[i][j].getValue() == value) { return true; }
                     }
                 }
             } else {
-                for (int i = 2; i < boardSize; ++i) {
-                    for (int j = 2; j < boardSize; ++j) {
+                for (int i = numQuadrantGroups; i < boardSize; ++i) {
+                    for (int j = numQuadrantGroups; j < boardSize; ++j) {
                         if (myBoard[i][j].getValue() == value) { return true; }
                     }
                 }
