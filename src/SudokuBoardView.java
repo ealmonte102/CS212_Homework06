@@ -101,8 +101,22 @@ public class SudokuBoardView extends JFrame {
     public void resetRadioSelection() {
         checkIfValidRadio.setSelected(true);
     }
-
+        
     public boolean isCheckIfValidSelected() {
         return checkIfValidRadio.isSelected();
+    }
+
+    public void setModel(SudokuBoard model) {
+        theBoard = model;
+    }
+
+    public void resetButtons() {
+        for(int i = 0; i < theBoard.boardSize; ++i) {
+            for(int j = 0; j < theBoard.boardSize; ++j) {
+                String boardValue = Integer.toString(theBoard.getSquare(i,j).getValue());
+                if(boardValue == "0") { boardValue = ""; }
+                sudokuButtons[i][j].setText(boardValue);
+            }
+        }
     }
 }
