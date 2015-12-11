@@ -3,6 +3,7 @@
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class SudokuBoardView extends JFrame {
     private SudokuBoard theBoard;
@@ -76,5 +77,11 @@ public class SudokuBoardView extends JFrame {
         }
     }
 
+    public void addClearRadioListener(ActionListener crl) {
+        clearRadio.addActionListener(crl);
+    }
 
+    public void addButtonListener(ActionListener bl, int row, int col) {
+        sudokuButtons[row][col].addActionListener(bl);
+    }
 }
