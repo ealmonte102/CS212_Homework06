@@ -16,7 +16,9 @@ public class SudokuBoardView extends JFrame {
 
     public SudokuBoardView(SudokuBoard theBoard, int height, int width) {
         super("Welcome To Sudoku");
+        this.theBoard = theBoard;
         initComponents();
+        setPreferredSize(new Dimension(width, height));
         pack();
     }
 
@@ -99,5 +101,9 @@ public class SudokuBoardView extends JFrame {
 
     public void resetRadioSelection() {
         checkIfValidRadio.setSelected(true);
+    }
+
+    public boolean isCheckIfValidSelected() {
+        return checkIfValidRadio.isSelected();
     }
 }
