@@ -4,6 +4,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import javax.swing.plaf.ColorUIResource;
 
 public class SudokuBoardView extends JFrame {
     private SudokuBoard theBoard;
@@ -17,6 +18,7 @@ public class SudokuBoardView extends JFrame {
     public SudokuBoardView(SudokuBoard theBoard, int height, int width) {
         super("Welcome To Sudoku");
         this.theBoard = theBoard;
+        UIManager.put("Button.disabledText", new ColorUIResource(Color.BLACK));
         initComponents();
         setPreferredSize(new Dimension(width, height));
         pack();
@@ -70,8 +72,15 @@ public class SudokuBoardView extends JFrame {
             for(int j = 0; j < theBoard.boardSize; j++) {
                 sudokuButtons[i][j] = new JButton();
                 String boardValue = Integer.toString(theBoard.getSquare(i,j).getValue());
-                if(boardValue == "0") { boardValue = ""; }
-                else { sudokuButtons[i][j].setText(boardValue); }
+                if(boardValue.equals("0")) {
+                    boardValue = "";
+                    sudokuButtons[i][j].setBackground(new Color(179,217,255));
+                }
+                else {
+                    sudokuButtons[i][j].setBackground(new Color(255,149,110));
+                    sudokuButtons[i][j].setEnabled(false);
+                }
+                sudokuButtons[i][j].setText(boardValue);
                 sudokuButtons[i][j].setActionCommand(i + "," + j);
                 boardPanel.add(sudokuButtons[i][j]);
             }
@@ -114,7 +123,7 @@ public class SudokuBoardView extends JFrame {
         for(int i = 0; i < theBoard.boardSize; ++i) {
             for(int j = 0; j < theBoard.boardSize; ++j) {
                 String boardValue = Integer.toString(theBoard.getSquare(i,j).getValue());
-                if(boardValue == "0") { boardValue = ""; }
+                if(boardValue.equals("0")) { boardValue = ""; }
                 sudokuButtons[i][j].setText(boardValue);
             }
         }
