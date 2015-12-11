@@ -3,7 +3,7 @@
  */
 public class SudokuBoard {
     private SudokuSquare myBoard[][];
-    private final int boardSize;
+    public final int boardSize;
 
     public SudokuBoard(SudokuSquareLinkedList aList) {
         boardSize = 4;
@@ -55,7 +55,7 @@ public class SudokuBoard {
         myBoard[row][col] = new SudokuSquare(row, col, value, false);
     }
 
-    private boolean isValid(int row, int column, int value) {
+    public boolean isValid(int row, int column, int value) {
         if(value < 0 || value > 4) { return false; }
         if(row < 0 || row > boardSize) { return false; }
         if(column < 0 || column > boardSize) { return false; }
