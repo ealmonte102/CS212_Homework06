@@ -3,7 +3,7 @@
  */
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class SudokuBoardController {
     private SudokuBoard boardModel;
@@ -13,10 +13,17 @@ public class SudokuBoardController {
         boardView = view;
         view.addClearRadioListener(new ClearRadioListener());
         addButtonListeners();
+
+        boardView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        view.setVisible(true);
     }
 
     private void addButtonListeners() {
-        //Intenionally left empty.
+        for(int i = 0; i < boardModel.boardSize; ++i) {
+            for(int j = 0; j < boardModel.boardSize; ++j) {
+                boardView.addButtonListener(new ButtonListener(), i, j);
+            }
+        }
     }
 
     private class ClearRadioListener implements ActionListener {
