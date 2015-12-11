@@ -50,7 +50,7 @@ public class SudokuBoardController {
             try {
                 valueFromInput = Integer.parseInt(boardView.getInputText());
             } catch(NumberFormatException nfe) {
-                boardView.setOutputText("Invalid input entered.");
+                boardView.setOutputText("The input entered is invalid.");
                 return;
             }
             String [] buttonLocation = e.getActionCommand().split(",");
@@ -58,9 +58,9 @@ public class SudokuBoardController {
             int column = Integer.parseInt(buttonLocation[1]);
             if(boardView.isCheckIfValidSelected()) {
                 if(boardModel.isValid(row, column, valueFromInput)) {
-                    boardView.setOutputText("The move is valid.");
+                    boardView.setOutputText("The move entered is VALID!");
                 } else {
-                    boardView.setOutputText("The move entered is not a valid move.");
+                    boardView.setOutputText("The move entered is NOT a valid move.");
                 }
                 return;
             }
