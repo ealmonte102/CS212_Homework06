@@ -34,19 +34,46 @@ public class SudokuBoardView extends JFrame {
     }
 
     private void initOutputField() {
-        //Intentionally Left Empty.
+        outputField = new JTextField(20);
+        outputField.setEditable(false);
+        outputField.setText("System Output");
+        outputField.setHorizontalAlignment((int)CENTER_ALIGNMENT);
     }
     private void initInputField() {
-        //Intentionally Left Empty.
+        inputField = new JTextField(20);
+        inputField.setEditable(true);
+        inputField.setHorizontalAlignment((int)CENTER_ALIGNMENT);
     }
     private void initRadioButtons() {
-        //Intentionally Left Empty.
+        ButtonGroup radioOptionGroup= new ButtonGroup();
+        checkIfValidRadio = new JRadioButton("Validate Move", true);
+        enterRadio = new JRadioButton("Enter Move");
+        clearRadio = new JRadioButton("Clear Board");
+
+        radioOptionGroup.add(checkIfValidRadio);
+        radioOptionGroup.add(enterRadio);
+        radioOptionGroup.add(clearRadio);
     }
-    private void initTopPanel(JPanel panel, JPanel optionPanel) {
-        //Intentionally Left Empty.
+    private void initTopPanel(JPanel topPanel, JPanel optionPanel) {
+        topPanel.add(outputField, BorderLayout.NORTH);
+        topPanel.add(optionPanel,BorderLayout.SOUTH);
+        topPanel.setSize(getSize());
+        optionPanel.add(checkIfValidRadio);
+        optionPanel.add(enterRadio);
+        optionPanel.add(clearRadio);
     }
     private void initSudokuBtns(JPanel boardPanel) {
-        //Intentionally Left Empty.
+        sudokuButtons = new JButton[4][4];
+        for(int i = 0; i < theBoard.boardSize; i++) {
+            for(int j = 0; j < theBoard.boardSize; j++) {
+                sudokuButtons[i][j] = new JButton();
+                String boardValue = Integer.toString(theBoard.getSquare(i,j).getValue());
+                if(boardValue == "0") { boardValue = ""; }
+                else { sudokuButtons[i][j].setText(boardValue); }
+                sudokuButtons[i][j].setActionCommand(i + "," + j);
+                boardPanel.add(sudokuButtons[i][j]);
+            }
+        }
     }
 
 
