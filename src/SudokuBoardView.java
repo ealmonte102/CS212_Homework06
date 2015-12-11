@@ -1,9 +1,9 @@
 /**
  * Created by Evan Almonte on 12/11/2015.
  */
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
 public class SudokuBoardView extends JFrame {
@@ -67,11 +67,12 @@ public class SudokuBoardView extends JFrame {
         optionPanel.add(clearRadio);
     }
     private void initSudokuBtns(JPanel boardPanel) {
-        sudokuButtons = new JButton[4][4];
+        sudokuButtons = new JButton[theBoard.boardSize][theBoard.boardSize];
         for(int i = 0; i < theBoard.boardSize; i++) {
             for(int j = 0; j < theBoard.boardSize; j++) {
                 sudokuButtons[i][j] = new JButton();
                 String boardValue = Integer.toString(theBoard.getSquare(i,j).getValue());
+                //Set the value of each button, if the value is "0" leave the button blank.
                 if(boardValue.equals("0")) {
                     boardValue = "";
                     sudokuButtons[i][j].setBackground(new Color(179,217,255));
