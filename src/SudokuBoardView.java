@@ -16,8 +16,8 @@ public class SudokuBoardView extends JFrame {
 
     public SudokuBoardView(SudokuBoard theBoard, int height, int width) {
         super("Welcome To Sudoku");
-        setSize(height, width);
         initComponents();
+        pack();
     }
 
     private void initComponents() {
