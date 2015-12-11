@@ -12,6 +12,11 @@ public class SudokuBoardController {
         boardModel = model;
         boardView = view;
         view.addClearRadioListener(new ClearRadioListener());
+        addButtonListeners();
+    }
+
+    private void addButtonListeners() {
+        //Intenionally left empty.
     }
 
     private class ClearRadioListener implements ActionListener {
@@ -29,6 +34,35 @@ public class SudokuBoardController {
                 }
             }
             boardView.resetRadioSelection();
+        }
+    }
+
+    private class ButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            int valueFromInput;
+            try {
+                valueFromInput = Integer.parseInt(boardView.getInputText());
+            } catch(NumberFormatException nfe) {
+                boardView.setOutputText("Invalid input entered.");
+                return;
+            }
+            String [] buttonLocation = e.getActionCommand().split(",");
+            int row = Integer.parseInt(buttonLocation[0]);
+            int column = Integer.parseInt(buttonLocation[1]);
+            if(boardView.isCheckIfValidSelected()) {
+                if(boardModel.isValid(row, column, valueFromInput)) {
+                    boardView.setOutputText("The move is valid.");
+                } else {
+                    boardView.setOutputText("The move entered is not a valid move.");
+                }
+                return;
+            }
+            try {
+                boardModel.enterMove(row, column, valueFromInput);
+                boardView.setButtonText(Integer.toString(valueFromInput), row, column);
+            } catch(SudokuException se) {
+                boardView.setOutputText("Cannot place a " + valueFromInput + " in that location.");
+            }
         }
     }
 }
