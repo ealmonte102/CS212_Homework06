@@ -96,4 +96,8 @@ public class SudokuBoardView extends JFrame {
     public void setOutputText(String textOutput) {
         outputField.setText(textOutput);
     }
+
+    public void resetRadioSelection() {
+        checkIfValidRadio.setSelected(true);
+    }
 }
