@@ -39,7 +39,6 @@ public class SudokuBoardView extends JFrame {
     private void initOutputField() {
         outputField = new JTextField(20);
         outputField.setEditable(false);
-        outputField.setText("System Output");
         outputField.setHorizontalAlignment((int)CENTER_ALIGNMENT);
     }
     private void initInputField() {
