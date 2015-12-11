@@ -45,13 +45,16 @@ public class SudokuBoardController {
             try {
                 valueFromInput = Integer.parseInt(boardView.getInputText());
             } catch(NumberFormatException nfe) {
-                boardView.setOutputText("The input entered is invalid.");
+                boardView.setOutputText("Invalid input entered.");
+                return;
+            }
+            if(valueFromInput > boardModel.boardSize || valueFromInput < 1) {
+                boardView.setOutputText("The value entered must be within the range of 1 - " + boardModel.boardSize);
                 return;
             }
             String [] buttonLocation = e.getActionCommand().split(",");
             int row = Integer.parseInt(buttonLocation[0]);
             int column = Integer.parseInt(buttonLocation[1]);
-
             if(boardView.isCheckIfValidSelected()) {
                 if(boardModel.isValid(row, column, valueFromInput)) {
                     boardView.setOutputText("The move entered is VALID!");
