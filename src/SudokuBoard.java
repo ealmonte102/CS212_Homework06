@@ -23,6 +23,10 @@ public class SudokuBoard {
             r = aSquare.getRow();
             c = aSquare.getColumn();
             value = aSquare.getValue();
+            if(value > boardSize) {
+                System.out.println("Invalid board size created for file.");
+                System.exit(1);
+            }
             myBoard[r][c] = new SudokuSquare(r, c, value, true);
             aNode = aList.getNext();
         }
