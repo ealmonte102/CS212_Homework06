@@ -7,16 +7,8 @@ import java.util.StringTokenizer;
 
 public class Homework06 {
     public static void main(String[] args) {
-        SudokuBoard startingBoard;
-        try {
-            startingBoard = new SudokuBoard(getBoardFromFile(), 4);
-        } catch(IOException ioe) {
-            System.out.println("ERROR, file not found.");
-            return;
-        }
-        SudokuBoardView myView = new SudokuBoardView(startingBoard, 500, 500);
-        SudokuBoardController sudokuController = new SudokuBoardController(startingBoard, myView);
-
+        SudokuBoard startingBoard = null;
+        testGui(startingBoard);
     }
 
     public static void test(SudokuBoard gameBoard) {
@@ -39,6 +31,17 @@ public class Homework06 {
         }
     }
 
+    public static void testGui(SudokuBoard startingBoard) {
+        try {
+            startingBoard = getBoardFromFile();
+        } catch (IOException ioe) {
+            System.out.println("Error! File not found.");
+            System.exit(1);
+        }
+        SudokuBoardView myView = new SudokuBoardView(startingBoard, 500, 500);
+        SudokuBoardController sudokuController = new SudokuBoardController(startingBoard, myView);
+    }
+
     public static void printBoard(SudokuBoard gameBoard) {
         System.out.println();
         for(int i = 0; i < 4; i++) {
@@ -50,25 +53,35 @@ public class Homework06 {
         System.out.println();
     }
 
-    public static SudokuSquareLinkedList getBoardFromFile() throws IOException{
+    public static SudokuBoard getBoardFromFile() throws IOException {
+        SudokuSquareLinkedList startingSquares = new SudokuSquareLinkedList();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("board.txt")));
         String line = br.readLine();
-        SudokuSquareLinkedList boardFromFile = new SudokuSquareLinkedList();
+        int sizeOfBoard = 4;
+        //Get the size of the board on the first line.
+        if(line != null) {
+            try {
+                sizeOfBoard = Integer.parseInt(line);
+            } catch(NumberFormatException nfe) {
+                System.out.println("Invalid board size line.");
+                System.exit(1);
+            }
+        }
+        line = br.readLine();
+        //Append squares to the starting list read from the file.
         while(line != null) {
             StringTokenizer tokenLine = new StringTokenizer(line, ",");
             try {
                 int row = Integer.parseInt(tokenLine.nextToken());
                 int column = Integer.parseInt(tokenLine.nextToken());
                 int value = Integer.parseInt(tokenLine.nextToken());
-                boardFromFile.append(new SudokuSquareNode(new SudokuSquare(row,column,value,true)));
-            } catch(NumberFormatException nfe) {
+                startingSquares.append(new SudokuSquareNode(new SudokuSquare(row, column, value, true)));
+            } catch (NumberFormatException nfe) {
                 System.out.println("File has invalid input.");
-                return null;
+                System.exit(1);
             }
             line = br.readLine();
         }
-
-
-        return boardFromFile;
+        return new SudokuBoard(startingSquares, sizeOfBoard);
     }
 }
