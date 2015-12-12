@@ -91,12 +91,11 @@ public class SudokuBoardView extends JFrame {
         }
     }
     private void drawButtonBorder(JButton theButton, int row, int col) {
-        int numOfQuadrants = (int)Math.sqrt(theBoard.boardSize);
-        if(row != 0 && col != 0 && col % numOfQuadrants == 0 && row % numOfQuadrants == 0) {
+        if(row != 0 && col != 0 && col % theBoard.quadrantSize == 0 && row % theBoard.quadrantSize == 0) {
             sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(3,3,1,1,Color.black));
-        } else if (col % numOfQuadrants == 0 && col != 0) {
+        } else if (col % theBoard.quadrantSize == 0 && col != 0) {
             sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(1,3,1,1,Color.black));
-        } else if(row % numOfQuadrants == 0 && row != 0) {
+        } else if(row % theBoard.quadrantSize == 0 && row != 0) {
             sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(3,1,1,1,Color.black));
         } else {
             sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));

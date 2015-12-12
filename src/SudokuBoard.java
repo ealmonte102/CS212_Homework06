@@ -67,15 +67,14 @@ public class SudokuBoard {
     }
 
     private boolean valueInQuadrant(int row, int col, int value) {
-        int numOfQuads = (int)Math.sqrt(boardSize);
-        int quadRow = row / numOfQuads;
-        int quadCol = col / numOfQuads;
-        int startRow = numOfQuads * quadRow;
-        int startCol = numOfQuads * quadCol;
+        int quadRow = row / quadrantSize;
+        int quadCol = col / quadrantSize;
+        int startRow = quadrantSize * quadRow;
+        int startCol = quadrantSize * quadCol;
         if (quadRow != 0) { startRow += 1; }
         if (quadCol != 0) { startCol += 1; }
-        for(int i = startRow; i < startRow + numOfQuads - 1; ++i) {
-            for(int j = startCol; j < startCol + numOfQuads - 1; ++j) {
+        for(int i = startRow; i < startRow + quadrantSize - 1; ++i) {
+            for(int j = startCol; j < startCol + quadrantSize - 1; ++j) {
                 if(myBoard[i][j].getValue() == value) {
                     return true;
                 }
