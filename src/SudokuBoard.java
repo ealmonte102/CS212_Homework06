@@ -4,9 +4,11 @@
 public class SudokuBoard {
     private SudokuSquare myBoard[][];
     public final int boardSize;
+    public final int quadrantSize;
 
     public SudokuBoard(SudokuSquareLinkedList aList, int boardSize) {
-        if(boardSize != 4 && boardSize != 5 && boardSize != 9) { boardSize = 4; }
+        if(boardSize != 4 && boardSize != 9 && boardSize != 16) { boardSize = 4; }
+        quadrantSize = (int)Math.sqrt(boardSize);
         this.boardSize = boardSize;
         myBoard = new SudokuSquare[boardSize][boardSize];
         for(int r = 0; r < boardSize; ++r) {
