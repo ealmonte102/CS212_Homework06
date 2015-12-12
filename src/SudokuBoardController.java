@@ -16,7 +16,7 @@ public class SudokuBoardController {
         view.addClearRadioListener(new ClearRadioListener());
         addButtonListeners();
 
-        boardView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        boardView.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         view.setVisible(true);
     }
 
