@@ -73,7 +73,8 @@ public class SudokuBoardController {
             try {
                 Integer.parseInt(checkInput);
             } catch (NumberFormatException nfe) {
-                boardView.setOutputText("Invalid input entered.");
+                if(checkInput.isEmpty()) { boardView.setOutputText("No input entered."); }
+                else { boardView.setOutputText("Invalid input entered."); }
                 return false;
             }
             return true;
