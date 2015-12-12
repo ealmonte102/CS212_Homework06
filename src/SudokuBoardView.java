@@ -16,7 +16,7 @@ public class SudokuBoardView extends JFrame {
     private JButton [][] sudokuButtons;
 
     public SudokuBoardView(SudokuBoard theBoard, int height, int width) {
-        super("Welcome To Sudoku");
+        super("Welcome To Sudoku " + theBoard.boardSize + "x" + theBoard.boardSize);
         this.theBoard = theBoard;
         UIManager.put("Button.disabledText", new ColorUIResource(Color.BLACK));
         initComponents();
@@ -67,7 +67,6 @@ public class SudokuBoardView extends JFrame {
         optionPanel.add(clearRadio);
     }
     private void initSudokuBtns(JPanel boardPanel) {
-        int numOfQuadrants = (int)Math.sqrt(theBoard.boardSize);
         sudokuButtons = new JButton[theBoard.boardSize][theBoard.boardSize];
         for(int i = 0; i < theBoard.boardSize; i++) {
             for(int j = 0; j < theBoard.boardSize; j++) {
@@ -82,16 +81,8 @@ public class SudokuBoardView extends JFrame {
                     sudokuButtons[i][j].setBackground(new Color(255,149,110));
                     sudokuButtons[i][j].setEnabled(false);
                 }
-                //Creates the grid border
-                if(i != 0 && j != 0 && j % numOfQuadrants == 0 && i % numOfQuadrants == 0) {
-                    sudokuButtons[i][j].setBorder(BorderFactory.createMatteBorder(3,3,1,1,Color.black));
-                } else if (j % numOfQuadrants == 0 && j != 0) {
-                    sudokuButtons[i][j].setBorder(BorderFactory.createMatteBorder(1,3,1,1,Color.black));
-                } else if(i % numOfQuadrants == 0 && i != 0) {
-                    sudokuButtons[i][j].setBorder(BorderFactory.createMatteBorder(3,1,1,1,Color.black));
-                } else {
-                    sudokuButtons[i][j].setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-                }
+
+                drawButtonBorder(sudokuButtons[i][j], i, j);
                 sudokuButtons[i][j].setText(boardValue);
                 //Set the action command to represent the row and column the button corresponds to.
                 sudokuButtons[i][j].setActionCommand(i + "," + j);
@@ -99,7 +90,19 @@ public class SudokuBoardView extends JFrame {
             }
         }
     }
-
+    private void drawButtonBorder(JButton theButton, int row, int col) {
+        int numOfQuadrants = (int)Math.sqrt(theBoard.boardSize);
+        if(row != 0 && col != 0 && col % numOfQuadrants == 0 && row % numOfQuadrants == 0) {
+            sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(3,3,1,1,Color.black));
+        } else if (col % numOfQuadrants == 0 && col != 0) {
+            sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(1,3,1,1,Color.black));
+        } else if(row % numOfQuadrants == 0 && row != 0) {
+            sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(3,1,1,1,Color.black));
+        } else {
+            sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
+        }
+    }
+    
     public void addClearRadioListener(ActionListener crl) {
         clearRadio.addActionListener(crl);
     }
