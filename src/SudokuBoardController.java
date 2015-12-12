@@ -1,6 +1,7 @@
 /**
  * Created by Evan Almonte on 12/11/2015.
  */
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -8,6 +9,7 @@ import javax.swing.*;
 public class SudokuBoardController {
     private SudokuBoard boardModel;
     private SudokuBoardView boardView;
+
     public SudokuBoardController(SudokuBoard model, SudokuBoardView view) {
         boardModel = model;
         boardView = view;
@@ -19,8 +21,8 @@ public class SudokuBoardController {
     }
 
     private void addButtonListeners() {
-        for(int i = 0; i < boardModel.boardSize; ++i) {
-            for(int j = 0; j < boardModel.boardSize; ++j) {
+        for (int i = 0; i < boardModel.boardSize; ++i) {
+            for (int j = 0; j < boardModel.boardSize; ++j) {
                 boardView.addButtonListener(new ButtonListener(), i, j);
             }
         }
@@ -30,7 +32,7 @@ public class SudokuBoardController {
         public void actionPerformed(ActionEvent e) {
             int userChoice = JOptionPane.showConfirmDialog(null, "Would you like to reset the board?",
                     "Please Choose An Option", JOptionPane.YES_NO_OPTION);
-            if(userChoice == JOptionPane.YES_OPTION) {
+            if (userChoice == JOptionPane.YES_OPTION) {
                 boardModel.reset();
                 boardView.setModel(boardModel);
                 boardView.resetButtons();
@@ -41,45 +43,61 @@ public class SudokuBoardController {
 
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            int valueFromInput;
-            try {
-                valueFromInput = Integer.parseInt(boardView.getInputText());
-            } catch(NumberFormatException nfe) {
-                boardView.setOutputText("Invalid input entered.");
+            int inputValue;
+            String inputAsString = boardView.getInputText();
+            //Checks if the input entered into the text field is valid
+            if (!isValidInt(inputAsString)) {
                 return;
             }
-            if(valueFromInput > boardModel.boardSize || valueFromInput < 1) {
+            inputValue = Integer.parseInt(inputAsString);
+            if (inputValue > boardModel.boardSize || inputValue < 1) {
                 boardView.setOutputText("The value entered must be within the range of 1 - " + boardModel.boardSize);
                 return;
             }
-            String [] buttonLocation = e.getActionCommand().split(",");
+
+            String[] buttonLocation = e.getActionCommand().split(",");
             int row = Integer.parseInt(buttonLocation[0]);
             int column = Integer.parseInt(buttonLocation[1]);
-            if(boardView.isCheckIfValidSelected()) {
-                if(boardModel.isValid(row, column, valueFromInput)) {
+            if (boardView.isCheckIfValidSelected()) {
+                if (boardModel.isValid(row, column, inputValue)) {
                     boardView.setOutputText("The move entered is VALID!");
                 } else {
                     boardView.setOutputText("The move entered is NOT valid.");
                 }
                 return;
             }
+            enterMove(row, column, inputValue);
+        }
+
+        private boolean isValidInt(String checkInput) {
             try {
-                boardModel.enterMove(row, column, valueFromInput);
-                boardView.setButtonText(Integer.toString(valueFromInput), row, column);
-                if(boardModel.isFull()) {
-                    int userChoice = JOptionPane.showConfirmDialog(null,"Would you like to start over?",
-                            "Please select a choice", JOptionPane.YES_NO_OPTION);
+                Integer.parseInt(checkInput);
+            } catch (NumberFormatException nfe) {
+                boardView.setOutputText("Invalid input entered.");
+                return false;
+            }
+            return true;
+        }
+
+        private void enterMove(int row, int column, int value) {
+            try {
+                boardModel.enterMove(row, column, value);
+                boardView.setButtonText(Integer.toString(value), row, column);
+                if (boardModel.isFull()) {
+                    int userChoice = JOptionPane.showConfirmDialog(null, "Would you like to start over?",
+                            "Congratulation, You Won!", JOptionPane.YES_NO_OPTION);
                     switch (userChoice) {
                         case JOptionPane.YES_OPTION:
                             boardModel.reset();
                             boardView.setModel(boardModel);
                             boardView.resetButtons();
+                            boardView.resetRadioSelection();
                             break;
                         default:
                     }
                 }
-            } catch(SudokuException se) {
-                boardView.setOutputText("Cannot place a " + valueFromInput + " in that location.");
+            } catch (SudokuException se) {
+                boardView.setOutputText("Cannot place a " + value + " in that location.");
             }
         }
     }
