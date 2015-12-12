@@ -65,33 +65,17 @@ public class SudokuBoard {
     }
 
     private boolean valueInQuadrant(int row, int col, int value) {
-        int numQuadrantGroups = (int)Math.sqrt(boardSize);
-        if(row < numQuadrantGroups) {
-            if(col < numQuadrantGroups) {
-                for(int i = 0; i < numQuadrantGroups; ++i) {
-                    for(int j = 0; j < numQuadrantGroups; ++j) {
-                        if(myBoard[i][j].getValue() == value){ return true; }
-                    }
-                }
-            } else {
-                for (int i = 0; i < numQuadrantGroups; ++i) {
-                    for (int j = numQuadrantGroups; j < boardSize; ++j) {
-                        if (myBoard[i][j].getValue() == value) { return true; }
-                    }
-                }
-            }
-        } else {
-            if (col < numQuadrantGroups) {
-                for (int i = numQuadrantGroups; i < boardSize; ++i) {
-                    for (int j = 0; j < numQuadrantGroups; ++j) {
-                        if (myBoard[i][j].getValue() == value) { return true; }
-                    }
-                }
-            } else {
-                for (int i = numQuadrantGroups; i < boardSize; ++i) {
-                    for (int j = numQuadrantGroups; j < boardSize; ++j) {
-                        if (myBoard[i][j].getValue() == value) { return true; }
-                    }
+        int numOfQuads = (int)Math.sqrt(boardSize);
+        int quadRow = row / numOfQuads;
+        int quadCol = col / numOfQuads;
+        int startRow = numOfQuads * quadRow;
+        int startCol = numOfQuads * quadCol;
+        if (quadRow != 0) { startRow += 1; }
+        if (quadCol != 0) { startCol += 1; }
+        for(int i = startRow; i < startRow + numOfQuads - 1; ++i) {
+            for(int j = startCol; j < startCol + numOfQuads - 1; ++j) {
+                if(myBoard[i][j].getValue() == value) {
+                    return true;
                 }
             }
         }
