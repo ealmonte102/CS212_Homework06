@@ -9,7 +9,7 @@ public class Homework06 {
     public static void main(String[] args) {
         SudokuBoard startingBoard;
         try {
-            startingBoard = new SudokuBoard(getBoardFromFile());
+            startingBoard = new SudokuBoard(getBoardFromFile(), 4);
         } catch(IOException ioe) {
             System.out.println("ERROR, file not found.");
             return;
