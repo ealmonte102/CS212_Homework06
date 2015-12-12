@@ -10,7 +10,6 @@ public class SudokuSquare {
     public SudokuSquare() {}
 
     public SudokuSquare(int row, int column, int value, boolean locked) {
-        if(value < 0 || value > 4) { throw new IllegalArgumentException("Value can only be between 0-4"); }
         if(row < 0 || column < 0) { throw new IllegalArgumentException("Row/column value cannot be negative"); }
         this.row = row;
         this.column = column;
