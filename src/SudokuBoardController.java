@@ -33,9 +33,7 @@ public class SudokuBoardController {
             int row = Integer.parseInt(buttonLocation[0]);
             int column = Integer.parseInt(buttonLocation[1]);
             if (boardView.isClearSelected()) {
-                try {
-                    boardModel.enterMove(row, column, 0);
-                } catch (SudokuException se) { }
+                boardModel.clearSquare(row, column);
                 String updatedText = Integer.toString(boardModel.getSquare(row, column).getValue());
                 boardView.setButtonText(updatedText,row, column);
                 return;

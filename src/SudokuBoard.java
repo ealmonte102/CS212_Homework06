@@ -62,12 +62,19 @@ public class SudokuBoard {
         myBoard[row][col] = new SudokuSquare(row, col, value, false);
     }
 
+    public void clearSquare(int row, int col) {
+        if(row >= 0 || row < boardSize && col >= 0 && col < boardSize) {
+            if(! myBoard[row][col].isLocked()) {
+                myBoard[row][col] = new SudokuSquare(row, col, 0, false);
+            }
+        }
+    }
+
     public boolean isValid(int row, int column, int value) {
-        if(value < 0 || value > boardSize) { return false; }
+        if(value < 1 || value > boardSize) { return false; }
         if(row < 0 || row > boardSize) { return false; }
         if(column < 0 || column > boardSize) { return false; }
         if(myBoard[row][column].isLocked()) { return false; }
-        if(value == 0) { return true; }
         return !(valueInQuadrant(row, column, value) || valueInRow(row, value) || valueInColumn(column, value));
     }
 
