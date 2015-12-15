@@ -63,10 +63,11 @@ public class SudokuBoard {
     }
 
     public boolean isValid(int row, int column, int value) {
-        if(value < 1 || value > boardSize) { return false; }
+        if(value < 0 || value > boardSize) { return false; }
         if(row < 0 || row > boardSize) { return false; }
         if(column < 0 || column > boardSize) { return false; }
         if(myBoard[row][column].isLocked()) { return false; }
+        if(value == 0) { return true; }
         return !(valueInQuadrant(row, column, value) || valueInRow(row, value) || valueInColumn(column, value));
     }
 
