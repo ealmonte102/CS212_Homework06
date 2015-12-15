@@ -13,9 +13,7 @@ public class SudokuBoardController {
     public SudokuBoardController(SudokuBoard model, SudokuBoardView view) {
         boardModel = model;
         boardView = view;
-        view.addClearRadioListener(new ClearRadioListener());
         addButtonListeners();
-
         boardView.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         view.setVisible(true);
     }
@@ -28,21 +26,19 @@ public class SudokuBoardController {
         }
     }
 
-    private class ClearRadioListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            int userChoice = JOptionPane.showConfirmDialog(null, "Would you like to reset the board?",
-                    "Please Choose An Option", JOptionPane.YES_NO_OPTION);
-            if (userChoice == JOptionPane.YES_OPTION) {
-                boardModel.reset();
-                boardView.setModel(boardModel);
-                boardView.resetButtons();
-            }
-            boardView.resetRadioSelection();
-        }
-    }
-
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            String[] buttonLocation = e.getActionCommand().split(",");
+            int row = Integer.parseInt(buttonLocation[0]);
+            int column = Integer.parseInt(buttonLocation[1]);
+            if (boardView.isClearSelected()) {
+                try {
+                    boardModel.enterMove(row, column, 0);
+                } catch (SudokuException se) { }
+                String updatedText = Integer.toString(boardModel.getSquare(row, column).getValue());
+                boardView.setButtonText(updatedText,row, column);
+                return;
+            }
             int inputValue;
             String inputAsString = boardView.getInputText();
             //Checks if the input entered into the text field is valid
@@ -51,13 +47,9 @@ public class SudokuBoardController {
             }
             inputValue = Integer.parseInt(inputAsString);
             if (inputValue > boardModel.boardSize || inputValue < 1) {
-                boardView.setOutputText("The value entered must be within the range of 1 - " + boardModel.boardSize);
+                boardView.setOutputText("The value entered must be within the range of 0 - " + boardModel.boardSize);
                 return;
             }
-
-            String[] buttonLocation = e.getActionCommand().split(",");
-            int row = Integer.parseInt(buttonLocation[0]);
-            int column = Integer.parseInt(buttonLocation[1]);
             if (boardView.isCheckIfValidSelected()) {
                 if (boardModel.isValid(row, column, inputValue)) {
                     boardView.setOutputText("The move entered is VALID!");
