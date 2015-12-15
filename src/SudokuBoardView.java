@@ -52,7 +52,7 @@ public class SudokuBoardView extends JFrame {
         ButtonGroup radioOptionGroup= new ButtonGroup();
         checkIfValidRadio = new JRadioButton("Validate Move", true);
         enterRadio = new JRadioButton("Enter Move");
-        clearRadio = new JRadioButton("Clear Board");
+        clearRadio = new JRadioButton("Clear Square");
 
         radioOptionGroup.add(checkIfValidRadio);
         radioOptionGroup.add(enterRadio);
@@ -101,16 +101,15 @@ public class SudokuBoardView extends JFrame {
             sudokuButtons[row][col].setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
         }
     }
-    
-    public void addClearRadioListener(ActionListener crl) {
-        clearRadio.addActionListener(crl);
-    }
 
     public void addButtonListener(ActionListener bl, int row, int col) {
         sudokuButtons[row][col].addActionListener(bl);
     }
 
     public void setButtonText(String text, int row, int col) {
+        if(text.equals("0")) {
+            text = "";
+        }
         sudokuButtons[row][col].setText(text);
     }
 
@@ -125,9 +124,13 @@ public class SudokuBoardView extends JFrame {
     public void resetRadioSelection() {
         checkIfValidRadio.setSelected(true);
     }
-        
+
     public boolean isCheckIfValidSelected() {
         return checkIfValidRadio.isSelected();
+    }
+
+    public boolean isClearSelected() {
+        return clearRadio.isSelected();
     }
 
     public void setModel(SudokuBoard model) {
