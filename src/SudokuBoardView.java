@@ -14,6 +14,7 @@ public class SudokuBoardView extends JFrame {
     private JRadioButton clearRadio;
     private JTextField inputField;
     private JButton [][] sudokuButtons;
+    private JButton resetButton;
 
     public SudokuBoardView(SudokuBoard theBoard, int height, int width) {
         super("Welcome To Sudoku " + theBoard.boardSize + "x" + theBoard.boardSize);
@@ -28,7 +29,7 @@ public class SudokuBoardView extends JFrame {
         initOutputField();
         initRadioButtons();
         JPanel topContent = new JPanel(new BorderLayout());
-        JPanel topContentOpts = new JPanel(new GridBagLayout());
+        JPanel topContentOpts = new JPanel();
         initTopPanel(topContent, topContentOpts);
         JPanel boardPanel = new JPanel(new GridLayout(theBoard.boardSize, theBoard.boardSize));
         initSudokuBtns(boardPanel);
@@ -65,6 +66,8 @@ public class SudokuBoardView extends JFrame {
         optionPanel.add(checkIfValidRadio);
         optionPanel.add(enterRadio);
         optionPanel.add(clearRadio);
+        resetButton = new JButton("Reset");
+        optionPanel.add(resetButton);
     }
     private void initSudokuBtns(JPanel boardPanel) {
         sudokuButtons = new JButton[theBoard.boardSize][theBoard.boardSize];
@@ -104,6 +107,10 @@ public class SudokuBoardView extends JFrame {
 
     public void addButtonListener(ActionListener bl, int row, int col) {
         sudokuButtons[row][col].addActionListener(bl);
+    }
+
+    public void addResetBtnListener(ActionListener rbl) {
+        resetButton.addActionListener(rbl);
     }
 
     public void setButtonText(String text, int row, int col) {
