@@ -101,6 +101,7 @@ public class SudokuBoardController {
             if(option == JOptionPane.YES_OPTION) {
                 boardModel.reset();
                 boardView.resetButtons();
+                boardView.setOutputText("");
             }
         }
     }
