@@ -24,6 +24,7 @@ public class SudokuBoardController {
                 boardView.addButtonListener(new ButtonListener(), i, j);
             }
         }
+        boardView.addResetBtnListener(new resetButtonListener());
     }
 
     private class ButtonListener implements ActionListener {
@@ -91,6 +92,17 @@ public class SudokuBoardController {
                 }
             } catch (SudokuException se) {
                 boardView.setOutputText("Cannot place a " + value + " in that location.");
+            }
+        }
+    }
+
+    private class resetButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            int option = JOptionPane.showConfirmDialog(null, "Would you like to reset the board?", "Please choose an option",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if(option == JOptionPane.YES_OPTION) {
+                boardModel.reset();
+                boardView.resetButtons();
             }
         }
     }
